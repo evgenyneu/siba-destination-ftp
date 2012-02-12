@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Siba::Destination::Ftp::VERSION
   s.authors     = ["Evgeny Neumerzhitskiy"]
   s.email       = ["sausageskin@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/evgenyneu/siba-destination-ftp"
   s.license     = "MIT"
   s.summary     = %q{An FTP extension to SIBA backup and restore utility}
   s.description = %q{An extension to SIBA backup and restore utility. Adds FTP as a backup destination.}
