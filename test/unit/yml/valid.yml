@@ -1,8 +1,4 @@
-type: ftp
-key: some value
-array:
-- One
-- Two
-- 3
-bool: true
-
+host: myhost
+user: myuser
+password: mypassword
+directory: mydir

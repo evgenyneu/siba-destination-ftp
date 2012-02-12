@@ -8,36 +8,48 @@ require 'siba-destination-ftp/init'
 # 'guard' command will run unit tests automatically
 describe Siba::Destination::Ftp do
   before do                    
+    @cls = Siba::Destination::Ftp::Init
     @yml_path = File.expand_path('../yml', __FILE__)
   end
 
-  it "should load plugin" do
-    # helper to load options from YAML from @yml_path dir
-    options_hash = load_options "valid" 
-
-    plugin = Siba::Destination::Ftp::Init.new options_hash
-    plugin.must_be_instance_of Siba::Destination::Ftp::Init
-  end
-
   it "siba should load plugin" do 
-    # helper to load the plugin by siba (build and install ftp gem to make it work)
-    # @plugin_category = "destination"      
-    # @plugin_type = "ftp"         
-    # plugin = create_plugin "valid" 
-  end
-      
-  it "should check log" do
-    # ... code
-    # must_log "info"
-    # wont_log "warn"
-    # wont_log_from "warn"
-    # show_log 
+    options_hash = load_options "valid" 
+    plugin = @cls.new options_hash
+    plugin.must_be_instance_of Siba::Destination::Ftp::Init
+    plugin.worker.must_be_instance_of Siba::Destination::Ftp::Worker
+
+    plugin.worker.host.wont_be_nil
+    plugin.worker.host.must_equal options_hash["host"]
+    plugin.worker.user.wont_be_nil
+    plugin.worker.user.must_equal options_hash["user"]
+    plugin.worker.password.wont_be_nil
+    plugin.worker.password.must_equal options_hash["password"]
+    plugin.worker.directory.wont_be_nil
+    plugin.worker.directory.must_equal options_hash["directory"]
   end
 
-  it "should verify file operations" do
-    # fmock = mock_file(:file_directory?, true, ["Path"])
-    # fmock.expect(:file_utils_cd, nil, ["/dir"])
-    # ... code
-    # fmock.verify
+  it "siba should load plugin with just host" do 
+    @cls.new({"host" => "myhost"})
+  end
+
+  it "siba should get user and password from environment variables" do 
+    begin
+      env_user_prev = ENV[Siba::Destination::Ftp::Init::DEFAULT_FTP_USER_ENV_NAME]
+      env_password_prev = ENV[Siba::Destination::Ftp::Init::DEFAULT_FTP_PASSWORD_ENV_NAME]
+      user = "def user"
+      password = "def password"
+      ENV[Siba::Destination::Ftp::Init::DEFAULT_FTP_USER_ENV_NAME] = user
+      ENV[Siba::Destination::Ftp::Init::DEFAULT_FTP_PASSWORD_ENV_NAME] = password
+      plugin = @cls.new({"host" => "myhost"})
+      plugin.worker.user.must_equal user
+      plugin.worker.password.must_equal password
+    ensure
+      ENV[Siba::Destination::Ftp::Init::DEFAULT_FTP_USER_ENV_NAME] = env_user_prev
+      ENV[Siba::Destination::Ftp::Init::DEFAULT_FTP_PASSWORD_ENV_NAME] = env_password_prev
+    end
+  end
+
+  it "load should fail if no host" do 
+    ->{@cls.new({})}.must_raise Siba::CheckError
   end
 end
