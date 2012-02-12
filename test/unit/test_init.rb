@@ -52,4 +52,16 @@ describe Siba::Destination::Ftp do
   it "load should fail if no host" do 
     ->{@cls.new({})}.must_raise Siba::CheckError
   end
+
+  it "should call backup" do
+    @cls.new({"host"=>"testhost"}).backup "path_to_backup"
+  end
+
+  it "should call get_backups_list" do
+    @cls.new({"host"=>"testhost"}).get_backups_list "backup_name"
+  end
+
+  it "should call restore" do
+    @cls.new({"host"=>"testhost"}).restore "backup_name", "/dir"
+  end
 end
