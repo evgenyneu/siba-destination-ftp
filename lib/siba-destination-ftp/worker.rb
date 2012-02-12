@@ -25,14 +25,15 @@ module Siba::Destination
       end
 
       def check_connection
-        connect do |ftp|
-          begin
+        begin
+          connect do |ftp|
             test_file ftp
             logger.debug("FTP connection verified")
-          rescue
-            logger.error "Failed to connect to FTP server: #{host}"
-            raise
           end
+        rescue
+          logger.error "Failed to connect to FTP server: #{user_host_and_dir}.
+Please ensure your username/password are correct and you have read/write access to your FTP directory."
+          raise
         end
       end
 

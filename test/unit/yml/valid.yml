@@ -1,4 +1,4 @@
 host: myhost
 user: myuser
 password: mypassword
-directory: mydir
+dir: mydir

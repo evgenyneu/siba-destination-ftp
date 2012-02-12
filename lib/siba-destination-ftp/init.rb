@@ -16,7 +16,7 @@ module Siba::Destination
         host = Siba::SibaCheck.options_string options, "host"
         user = Siba::SibaCheck.options_string options, "user", true, ENV[DEFAULT_FTP_USER_ENV_NAME]
         password = Siba::SibaCheck.options_string options, "password", true, ENV[DEFAULT_FTP_PASSWORD_ENV_NAME]
-        directory = Siba::SibaCheck.options_string options, "directory", true, "/"
+        directory = Siba::SibaCheck.options_string options, "dir", true, "/"
         passive = Siba::SibaCheck.options_bool options, "passive", true, false
         @worker = Siba::Destination::Ftp::Worker.new host, user, password, directory, passive
       end                      

@@ -1,6 +1,6 @@
 host: yourserver.com
 user:
 password:
-directory: /sub/dir
+dir: /sub/dir
 passive: No # When 'Yes' the connection is in 'passive' mode
 # Note: all fields except "host" are optional

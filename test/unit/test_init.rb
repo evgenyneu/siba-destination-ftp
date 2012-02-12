@@ -25,7 +25,7 @@ describe Siba::Destination::Ftp do
     plugin.worker.password.wont_be_nil
     plugin.worker.password.must_equal options_hash["password"]
     plugin.worker.directory.wont_be_nil
-    plugin.worker.directory.must_equal options_hash["directory"]
+    plugin.worker.directory.must_equal options_hash["dir"]
     plugin.worker.passive.must_equal false
   end
 
