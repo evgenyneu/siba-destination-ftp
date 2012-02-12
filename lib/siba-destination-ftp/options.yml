@@ -1,2 +1,5 @@
-# A skeleton for the plugin options
-# It is used by 'siba generate' command
+host: yourserver.com
+user:
+password:
+directory: /sub/dir
+# Note: all fields except "host" are optional

@@ -5,12 +5,12 @@ require "siba-destination-ftp/version"
 Gem::Specification.new do |s|
   s.name        = "siba-destination-ftp"
   s.version     = Siba::Destination::Ftp::VERSION
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TOD0: your@email.com"]
+  s.authors     = ["Evgeny Neumerzhitskiy"]
+  s.email       = ["sausageskin@gmail.com"]
   s.homepage    = ""
   s.license     = "MIT"
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{An FTP extension to SIBA backup and restore utility}
+  s.description = %q{An extension to SIBA backup and restore utility. Adds FTP as a backup destination.}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -18,8 +18,9 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   
   s.add_runtime_dependency     'siba', '~>0.5'
-
-  s.add_development_dependency  'minitest', '~>2.10'
-  s.add_development_dependency  'rake', '~>0.9'
-  s.add_development_dependency  'guard-minitest', '~>0.4'
+  s.add_runtime_dependency     'net-ftp-list', '~>3.2'
+  
+  s.add_development _dependency   'minitest', '~>2.10'
+  s.add_development_dependency    'rake', '~>0.9'
+  s.add_development_dependency    'guard-minitest', '~>0.4'
 end
