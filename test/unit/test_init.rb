@@ -26,10 +26,16 @@ describe Siba::Destination::Ftp do
     plugin.worker.password.must_equal options_hash["password"]
     plugin.worker.directory.wont_be_nil
     plugin.worker.directory.must_equal options_hash["directory"]
+    plugin.worker.passive.must_equal false
   end
 
   it "siba should load plugin with just host" do 
     @cls.new({"host" => "myhost"})
+  end
+
+  it "init should set passive mode" do 
+    plugin = @cls.new({"host" => "myhost", "passive" => true})
+    plugin.worker.passive.must_equal true
   end
 
   it "siba should get user and password from environment variables" do 

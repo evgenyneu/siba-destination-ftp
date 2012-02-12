@@ -6,7 +6,7 @@ require 'siba-destination-ftp/init'
 describe Siba::Destination::Ftp::Worker do
   before do                    
     @cls = Siba::Destination::Ftp::Worker
-    @obj = @cls.new "host", nil, nil, nil
+    @obj = @cls.new "host", nil, nil, nil, false
   end
 
   it "should init" do 
@@ -15,30 +15,36 @@ describe Siba::Destination::Ftp::Worker do
     password = "testpassword"
     directory = "testdirectory"
 
-    worker = @cls.new host, user, password, directory
+    worker = @cls.new host, user, password, directory, false
     worker.host.must_equal host
     worker.user.must_equal user
     worker.password.must_equal password
     worker.directory.must_equal directory 
+    worker.passive.must_equal false
   end
 
   it "should call check_connection" do
     @obj.check_connection
   end
 
+  it "should set passive mode" do
+    @obj = @cls.new "host", nil, nil, nil, true
+    @obj.passive.must_equal true
+  end
+
   it "should call user_host_and_dir" do
     host = "myhost"
     user = "myuser"
     dir = "mydir"
-    @obj = @cls.new host, nil, nil, nil
+    @obj = @cls.new host, nil, nil, nil, false
     str = @obj.user_host_and_dir
     str.must_include host
     str.wont_include "dir"
 
-    @obj = @cls.new host, user, nil, nil
+    @obj = @cls.new host, user, nil, nil, false
     @obj.user_host_and_dir.must_include user
 
-    @obj = @cls.new host, user, nil, dir
+    @obj = @cls.new host, user, nil, dir, false
     @obj.user_host_and_dir.must_include dir
   end
 

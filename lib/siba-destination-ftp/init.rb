@@ -17,7 +17,8 @@ module Siba::Destination
         user = Siba::SibaCheck.options_string options, "user", true, ENV[DEFAULT_FTP_USER_ENV_NAME]
         password = Siba::SibaCheck.options_string options, "password", true, ENV[DEFAULT_FTP_PASSWORD_ENV_NAME]
         directory = Siba::SibaCheck.options_string options, "directory", true, "/"
-        @worker = Siba::Destination::Ftp::Worker.new host, user, password, directory
+        passive = Siba::SibaCheck.options_bool options, "passive", true, false
+        @worker = Siba::Destination::Ftp::Worker.new host, user, password, directory, passive
       end                      
 
       # Put backup file (path_to_backup_file) to destination

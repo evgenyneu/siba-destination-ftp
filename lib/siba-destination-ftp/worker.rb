@@ -9,15 +9,16 @@ module Siba::Destination
       include Siba::LoggerPlug
       include Siba::FilePlug
 
-      attr_accessor :host, :user, :password, :directory
+      attr_accessor :host, :user, :password, :directory, :passive
 
-      def initialize(host, user, password, directory)
+      def initialize(host, user, password, directory, passive)
         @host = host
         @host = ENV[Siba::Destination::Ftp::Init::DEFAULT_FTP_HOST_ENV_NAME] if host.nil?
 
         @user = user
         @password = password
         @directory = directory || "/"
+        @passive = passive
 
         logger.info "Connecting to FTP server: #{host}"
         check_connection
@@ -116,6 +117,7 @@ module Siba::Destination
           ftp = nil
           begin
             ftp = Net::FTP.open(host, user, password)
+            ftp.passive = passive
             cd ftp
             block.call(ftp)
           ensure
